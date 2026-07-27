@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting Started in Architecture — Draw Your Dream Home | Monica Vandeventer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --trace: #f6f1e6;
+    --trace-raised: #fcf9f1;
+    --ink: #2b2419;
+    --ink-soft: #5c5346;
+    --clay: #bd5b39;
+    --clay-deep: #93432a;
+    --sage: #7c8a63;
+    --blueprint: #4a7089;
+    --brass: #a9832e;
+    --line: #ddd2b8;
+    --dot: rgba(43,36,25,0.16);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(var(--dot) 1px, transparent 1.2px) 0 0/22px 22px,
+      var(--trace);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+
+  .wrap{ max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  .serif{ font-family: 'Fraunces', serif; }
+
+  /* ---------- roofline divider (signature motif) ---------- */
+  .roofline{
+    display:flex;
+    justify-content:center;
+    margin: 0;
+    color: var(--clay);
+    opacity: 0.9;
+  }
+  .roofline svg{ width: 64px; height: 20px; }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(246,241,230,0.9);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .wordmark{
+    font-family:'Fraunces', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 17px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color: var(--ink);
+  }
+  .wordmark svg{ width:22px; height:22px; flex-shrink:0; color: var(--clay); }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration:none;
+    padding: 11px 20px;
+    border-radius: 30px;
+    white-space: nowrap;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn-primary{
+    background: var(--clay);
+    color: #fdf6ec;
+    box-shadow: 0 3px 0 var(--clay-deep);
+  }
+  .btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 5px 0 var(--clay-deep); }
+  .btn-ghost{
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--line);
+  }
+  .btn-ghost:hover{ background: var(--trace-raised); border-color: var(--clay); }
+  .btn-small{ padding: 8px 16px; font-size: 13px; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding: 70px 0 40px;
+    text-align: center;
+  }
+  .hero-eyebrow{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin: 0 0 20px;
+  }
+
+  .house-art{
+    width: 260px;
+    max-width: 70%;
+    margin: 0 auto 28px;
+    display:block;
+  }
+
+  .hero h1{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(32px, 6vw, 52px);
+    line-height: 1.08;
+    margin: 0 auto 20px;
+    max-width: 16ch;
+  }
+  .hero h1 em{
+    font-style: italic;
+    color: var(--clay);
+    font-weight: 500;
+  }
+  .hero p.lede{
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 50ch;
+    margin: 0 auto 32px;
+  }
+  .hero-ctas{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+  .hero-ctas .btn{ padding: 15px 26px; font-size: 15px; }
+
+  .stat-row{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .stat{
+    flex: 1 1 130px;
+    padding: 0 24px;
+    border-left: 1px solid var(--line);
+  }
+  .stat:first-child{ border-left: none; }
+  .stat b{
+    display:block;
+    font-family:'Fraunces', serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--clay);
+  }
+  .stat span{
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- sheet / section card ---------- */
+  .sheet{
+    background: var(--trace-raised);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    margin: 8px 0 36px;
+    padding: 48px 44px;
+  }
+  .sheet-kicker{
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--clay);
+    margin: 0 0 10px;
+  }
+  .sheet-title{
+    font-family:'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(22px, 3.2vw, 29px);
+    margin: 0 0 24px;
+    max-width: 26ch;
+  }
+
+  /* ---------- bio ---------- */
+  .bio-grid{
+    display:grid;
+    grid-template-columns: 96px 1fr;
+    gap: 30px;
+    align-items: start;
+  }
+  .bio-badge{
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: #eee3d1;
+    flex-shrink:0;
+  }
+  .bio-badge svg{ width:46px; height:46px; color: var(--clay); }
+  .bio p{ line-height: 1.8; color: var(--ink-soft); font-size: 16.5px; margin: 0 0 15px; }
+  .bio p:last-child{ margin-bottom:0; }
+  .bio strong{ color: var(--ink); font-weight: 600; }
+
+  .credential-strip{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .credential{
+    font-family:'Inter', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    border-radius: 20px;
+    padding: 7px 15px;
+    color: var(--ink-soft);
+    background: var(--trace);
+    border: 1px solid var(--line);
+  }
+
+  /* ---------- how it works ---------- */
+  .flow{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+  }
+  .flow-step{ text-align: left; }
+  .flow-step .flow-icon{ width: 34px; height:34px; margin-bottom: 16px; color: var(--clay); }
+  .flow-step h4{
+    font-family:'Fraunces', serif;
+    font-weight: 600;
+    font-size: 17px;
+    margin: 0 0 8px;
+  }
+  .flow-step p{
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin:0;
+  }
+
+  /* ---------- syllabus / drawing set ---------- */
+  .week{
+    display:grid;
+    grid-template-columns: 48px 44px 1fr;
+    gap: 18px;
+    align-items: start;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .week:first-of-type{ padding-top: 4px; }
+  .week:last-child{ border-bottom:none; padding-bottom: 4px; }
+  .week-num{
+    font-family:'Fraunces', serif;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--clay);
+    line-height: 1.1;
+  }
+  .week-icon{ width: 40px; height: 40px; color: var(--blueprint); margin-top: 2px; }
+  .week h4{
+    font-family:'Fraunces', serif;
+    font-weight: 600;
+    font-size: 17px;
+    margin: 0 0 6px;
+  }
+  .week p{
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ---------- gallery ---------- */
+  .gallery-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .gallery-item{
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: zoom-in;
+    background: var(--trace);
+    aspect-ratio: 4/3;
+    border: none;
+    padding: 0;
+    display:block;
+    width: 100%;
+  }
+  .gallery-item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display:block;
+    transition: transform .35s ease;
+  }
+  .gallery-item:hover img{ transform: scale(1.06); }
+  .gallery-tag{
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    background: rgba(43,36,25,0.78);
+    color: #fdf6ec;
+    font-size: 11.5px;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+  }
+  .lightbox{
+    display:none;
+    position: fixed;
+    inset: 0;
+    background: rgba(43,36,25,0.92);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  .lightbox.open{ display:flex; }
+  .lightbox img{
+    max-width: 92vw;
+    max-height: 82vh;
+    border-radius: 6px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .lightbox-cap{
+    position:absolute;
+    bottom: 28px;
+    left: 0; right: 0;
+    text-align:center;
+    color: #fdf6ec;
+    font-size: 14px;
+  }
+  .lightbox-close{
+    position:absolute;
+    top: 24px; right: 28px;
+    color: #fdf6ec;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    background:none;
+    border:none;
+    font-family: sans-serif;
+  }
+  @media (max-width: 720px){
+    .gallery-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ---------- learning goals ---------- */
+  .goal-list{
+    list-style:none;
+    margin: 0;
+    padding: 0;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 30px;
+  }
+  .goal-list li{
+    position: relative;
+    padding-left: 28px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .goal-list li::before{
+    content:"";
+    position:absolute;
+    left:0; top: 3px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 1.5px solid var(--sage);
+  }
+
+  /* ---------- supplies ---------- */
+  .supply-note{
+    font-size: 14px;
+    color: var(--ink-soft);
+    background: var(--trace);
+    border-left: 3px solid var(--sage);
+    padding: 12px 16px;
+    border-radius: 4px;
+    display:block;
+    margin-bottom: 24px;
+  }
+  .supply-list{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 24px;
+    list-style:none;
+    margin:0; padding:0;
+  }
+  .supply-list li{
+    font-size: 15px;
+    color: var(--ink-soft);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    display:flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .supply-list li b{ color: var(--ink); font-weight: 600; }
+
+  /* ---------- reviews ---------- */
+  .review-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+  .review{
+    background: var(--trace);
+    border-radius: 14px;
+    padding: 22px 24px;
+  }
+  .review p{
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink);
+    margin: 8px 0 12px;
+  }
+  .review span{
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .stars{ color: var(--brass); letter-spacing: 2px; font-size: 13px; }
+
+  /* ---------- final cta ---------- */
+  .final-cta{
+    text-align:center;
+    padding: 56px 30px;
+  }
+  .final-cta h2{
+    font-family:'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(24px,4vw,32px);
+    margin: 0 0 14px;
+  }
+  .final-cta p{
+    color: var(--ink-soft);
+    font-size: 16px;
+    max-width: 44ch;
+    margin: 0 auto 28px;
+  }
+
+  footer{
+    text-align:center;
+    font-size: 13px;
+    color: var(--ink-soft);
+    padding: 30px 24px 56px;
+  }
+  footer a{ color: var(--clay); text-decoration: none; }
+
+  @media (max-width: 720px){
+    .bio-grid{ grid-template-columns: 1fr; }
+    .flow{ grid-template-columns: 1fr; }
+    .goal-list{ grid-template-columns: 1fr; }
+    .supply-list{ grid-template-columns: 1fr; }
+    .review-grid{ grid-template-columns: 1fr; }
+    .sheet{ padding: 36px 24px; border-radius: 14px; }
+    .stat{ flex: 1 1 45%; margin-bottom: 16px; }
+    .hero{ padding: 50px 0 30px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="wordmark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V10.5L12 4l9 6.5V21"/><path d="M9 21v-7h6v7"/></svg>
+      Monica Vandeventer, Architect
+    </div>
+    <a class="btn btn-primary btn-small" href="mailto:monicacv@gmail.com?subject=Getting%20Started%20in%20Architecture%20-%20Enrollment%20Question">Email to enroll</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Architecture 101 · Live Online Class · 8 Weeks</p>
+
+    <svg class="house-art" viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- ground line -->
+      <path d="M20 220 H280" stroke="#ddd2b8" stroke-width="1.5"/>
+      <!-- isometric house body -->
+      <g stroke="#2b2419" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" fill="none">
+        <!-- left face -->
+        <path d="M90 120 L90 205 L150 225 L150 140 Z" fill="#fcf9f1"/>
+        <!-- right face -->
+        <path d="M150 140 L150 225 L225 200 L225 115 Z" fill="#f3ead9"/>
+        <!-- roof left -->
+        <path d="M75 100 L150 75 L150 140 L90 120 Z" fill="#bd5b39" stroke="#93432a"/>
+        <!-- roof right -->
+        <path d="M150 75 L235 95 L225 115 L150 140 Z" fill="#a34d30" stroke="#93432a"/>
+        <!-- chimney -->
+        <path d="M195 60 L195 90 L212 95 L212 65 Z" fill="#f3ead9" stroke="#2b2419"/>
+        <!-- door -->
+        <path d="M165 175 L165 215 L188 222 L188 182 Z" fill="#93432a" stroke="none"/>
+        <!-- windows right face -->
+        <rect x="196" y="140" width="18" height="18" transform="skewY(-8)" fill="none" stroke="#2b2419" stroke-width="1.5"/>
+        <!-- window left face -->
+        <rect x="105" y="150" width="20" height="20" fill="none" stroke="#2b2419" stroke-width="1.5"/>
+      </g>
+      <!-- tree -->
+      <g stroke="#2b2419" stroke-width="1.6" stroke-linecap="round">
+        <path d="M45 222 L45 190" stroke="#93432a"/>
+        <circle cx="45" cy="172" r="20" fill="#7c8a63" stroke="none"/>
+      </g>
+      <!-- pencil sketch line accent -->
+      <path d="M240 210 Q255 200 268 212" stroke="#4a7089" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-dasharray="1 6"/>
+    </svg>
+
+    <h1>Getting Started in Architecture: <em>Draw Your Dream Home</em></h1>
+    <p class="lede">A hands-on class where kids design their own dream house from scratch, and learn to draw it the way real architects do — floor plans, elevations, sections, and a roof plan — one drawing at a time, with just graph paper and a pencil.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="mailto:monicacv@gmail.com?subject=Getting%20Started%20in%20Architecture%20-%20Enrollment%20Question">Email Monica to enroll →</a>
+      <a class="btn btn-ghost" href="https://outschool.com/classes/getting-started-in-architecture-draw-your-dream-home-snx9pSzK" target="_blank" rel="noopener">View live schedule on Outschool</a>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><b>800+</b><span>learners taught</span></div>
+      <div class="stat"><b>4.75★</b><span>average rating</span></div>
+      <div class="stat"><b>20 yrs</b><span>practicing architect</span></div>
+      <div class="stat"><b>Since '20</b><span>teaching on Outschool</span></div>
+    </div>
+  </section>
+
+  <div class="roofline">
+    <svg viewBox="0 0 64 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 18 L32 3 L62 18"/></svg>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="sheet">
+    <p class="sheet-kicker">Your instructor</p>
+    <h2 class="sheet-title">Hi, I'm Monica.</h2>
+    <div class="bio-grid">
+      <div class="bio-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+      </div>
+      <div class="bio">
+        <p>I'm an <strong>architect, homeschool mom of three, and inventor at heart.</strong> I hold a Bachelor of Architecture from Woodbury University and have practiced architecture for the past 20 years — designing homes for celebrities as well as everyday families, including my own parents.</p>
+        <p>Alongside running my own architectural drafting and design company, I homeschool my three kids and ran a homeschool enrichment program of 30 students where we tackled group projects together. I love giving kids a chance to build lifelong skills — creativity, presentation, giving and receiving feedback — that serve them well beyond architecture.</p>
+        <p>I've been teaching on Outschool since January 2020, and this class draws directly on what I do every day as a working architect.</p>
+      </div>
+    </div>
+    <div class="credential-strip">
+      <span class="credential">B.Arch — Woodbury University</span>
+      <span class="credential">20 years in practice</span>
+      <span class="credential">800+ Outschool learners</span>
+      <span class="credential">4.75★ average</span>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="sheet">
+    <p class="sheet-kicker">The weekly rhythm</p>
+    <h2 class="sheet-title">Learn it, draw it, present it.</h2>
+    <div class="flow">
+      <div class="flow-step">
+        <svg class="flow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <h4>1. Watch &amp; learn</h4>
+        <p>Each week I introduce a new drawing type on video — what it is, what belongs on it, and how to build it — broken into short, followable segments.</p>
+      </div>
+      <div class="flow-step">
+        <svg class="flow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19l5-1 10-10-4-4L5 14z"/><path d="M14 5l4 4"/></svg>
+        <h4>2. Draw &amp; ask</h4>
+        <p>Students work through their assignment on their own during the week, posting questions and getting feedback from me along the way.</p>
+      </div>
+      <div class="flow-step">
+        <svg class="flow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10c0-3 2-5 4-5s4 2 4 5-2 4-4 6c-2-2-4-3-4-6z"/><path d="M8 15l-3 3M16 15l3 3"/></svg>
+        <h4>3. Present &amp; get feedback</h4>
+        <p>In our live class, every student presents their drawing for a few minutes and receives warm, constructive feedback — from me and from classmates.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SYLLABUS / DRAWING SET -->
+  <section class="sheet">
+    <p class="sheet-kicker">Eight weeks, one drawing at a time</p>
+    <h2 class="sheet-title">By the end, your student has drawn a full set of plans for a house they designed themselves.</h2>
+
+    <div>
+      <div class="week">
+        <div class="week-num">01</div>
+        <svg class="week-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        <div><h4>Introduction to architectural plans</h4><p>What types of drawings do architects actually use, and why? Students learn the architectural scale — the same tool used on real construction documents — and how to read it.</p></div>
+      </div>
+      <div class="week">
+        <div class="week-num">02</div>
+        <svg class="week-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-9 5 6 4-5 3 8"/><circle cx="9" cy="7" r="1.6"/></svg>
+        <div><h4>Site plan</h4><p>Imagine your dream property — that's what gets drawn. Students learn the elements, scale, and symbols that belong on a site plan.</p></div>
+      </div>
+      <div class="week">
+        <div class="week-num">03</div>
+        <svg class="week-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="1"/><path d="M3.5 9.5h17M9.5 9.5v10"/></svg>
+        <div><h4>Floor plan</h4><p>The drawing everyone pictures when they hear "architectural plans." Students design a unique floor plan from an inspirational object, and learn the dos and don'ts of laying out rooms.</p></div>
+      </div>
+      <div class="week">
+        <div class="week-num">04</div>
+        <svg class="week-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l9-8 9 8"/><path d="M3 13h18"/></svg>
+        <div><h4>Roof plan</h4><p>The basic elements, scale, and symbols of a roof plan — plus the fundamental roof types and how to draw each one.</p></div>
+      </div>
+      <div class="week">
+        <div class="week-num">05</div>
+        <svg class="week-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V8l8-5 8 5v12"/><path d="M4 20h16"/><rect x="10" y="13" width="4" height="7"/></svg>
+        <div><h4>Exterior elevations</h4><p>Students explore architectural styles and the door and window types that go with them, plus the materials homes are built from — and the trade-offs of each.</p></div>
+      </div>
+      <div class="week">
+        <div class="week-num">06</div>
+        <svg class="week-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V4h16v17"/><path d="M4 12.5h16M10 12.5V21"/></svg>
+        <div><h4>Sections</h4><p>We look at the house like a dollhouse with the front wall removed, studying how rooms relate to each other vertically — and touch on basic structure.</p></div>
+      </div>
+      <div class="week">
+        <div class="week-num">07</div>
+        <svg class="week-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="1"/><rect x="8" y="8.5" width="4" height="6"/><path d="M14.5 9h3M14.5 13h3"/></svg>
+        <div><h4>Interior elevations</h4><p>Time to play interior designer: students draw each wall of two rooms and consider finishes, flooring, wall materials, and furniture layout.</p></div>
+      </div>
+      <div class="week">
+        <div class="week-num">08</div>
+        <svg class="week-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19l6-13 3 7 3-4 2 10"/></svg>
+        <div><h4>Choice drawing</h4><p>Students pick their own finale — a perspective, a rendered floor plan or elevation, an axonometric, and more.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDENT GALLERY -->
+  <section class="sheet">
+    <p class="sheet-kicker">Real student work</p>
+    <h2 class="sheet-title">A look inside past classes.</h2>
+    <div class="gallery-grid">
+      <button class="gallery-item" data-full="images/gallery/floor-plan-01.jpg" data-cap="Floor Plan"><img src="images/gallery/floor-plan-01.jpg" alt="Student floor plan drawing" loading="lazy"><span class="gallery-tag">Floor Plan</span></button>
+      <button class="gallery-item" data-full="images/gallery/site-plan-01.jpg" data-cap="Site Plan"><img src="images/gallery/site-plan-01.jpg" alt="Student site plan drawing" loading="lazy"><span class="gallery-tag">Site Plan</span></button>
+      <button class="gallery-item" data-full="images/gallery/exterior-elevation-front.jpg" data-cap="Exterior Elevation"><img src="images/gallery/exterior-elevation-front.jpg" alt="Student exterior elevation drawing" loading="lazy"><span class="gallery-tag">Exterior Elevation</span></button>
+      <button class="gallery-item" data-full="images/gallery/section-drawing-01.jpg" data-cap="Section Drawing"><img src="images/gallery/section-drawing-01.jpg" alt="Student section drawing" loading="lazy"><span class="gallery-tag">Section</span></button>
+      <button class="gallery-item" data-full="images/gallery/interior-elevations.jpg" data-cap="Interior Elevations"><img src="images/gallery/interior-elevations.jpg" alt="Student interior elevations drawing" loading="lazy"><span class="gallery-tag">Interior Elevations</span></button>
+      <button class="gallery-item" data-full="images/gallery/rendered-exterior-elevation.jpg" data-cap="Rendered Exterior Elevation"><img src="images/gallery/rendered-exterior-elevation.jpg" alt="Student rendered exterior elevation" loading="lazy"><span class="gallery-tag">Rendered Elevation</span></button>
+      <button class="gallery-item" data-full="images/gallery/choice-axonometric.jpg" data-cap="Choice Drawing — Axonometric"><img src="images/gallery/choice-axonometric.jpg" alt="Student axonometric choice drawing" loading="lazy"><span class="gallery-tag">Choice: Axonometric</span></button>
+      <button class="gallery-item" data-full="images/gallery/interior-rendering-kitchen.jpg" data-cap="Interior Rendering — Kitchen"><img src="images/gallery/interior-rendering-kitchen.jpg" alt="Student 3D kitchen rendering" loading="lazy"><span class="gallery-tag">Interior Rendering</span></button>
+      <button class="gallery-item" data-full="images/gallery/choice-interior-perspective.jpg" data-cap="Choice Drawing — Perspective"><img src="images/gallery/choice-interior-perspective.jpg" alt="Student one-point perspective drawing" loading="lazy"><span class="gallery-tag">Choice: Perspective</span></button>
+      <button class="gallery-item" data-full="images/gallery/exterior-elevation-02.jpg" data-cap="Exterior Elevation"><img src="images/gallery/exterior-elevation-02.jpg" alt="Student exterior elevation drawing" loading="lazy"><span class="gallery-tag">Exterior Elevation</span></button>
+      <button class="gallery-item" data-full="images/gallery/interior-elevation-digital.jpg" data-cap="Interior Elevation — Digital"><img src="images/gallery/interior-elevation-digital.jpg" alt="Student digital interior elevation rendering" loading="lazy"><span class="gallery-tag">Interior Elevation</span></button>
+      <button class="gallery-item" data-full="images/gallery/site-plan-02.jpg" data-cap="Site Plan"><img src="images/gallery/site-plan-02.jpg" alt="Student site plan drawing" loading="lazy"><span class="gallery-tag">Site Plan</span></button>
+    </div>
+  </section>
+
+  <!-- LEARNING GOALS -->
+  <section class="sheet">
+    <p class="sheet-kicker">Learning outcomes</p>
+    <h2 class="sheet-title">A real, working introduction to architecture.</h2>
+    <ul class="goal-list">
+      <li>How to use an architectural scale to draw and measure to scale</li>
+      <li>How to read the symbols used on real architectural plans</li>
+      <li>The basic types of architectural drawings and how they describe an actual building</li>
+      <li>How to present ideas to others and take in constructive feedback</li>
+      <li>A finished, hand-drawn set of plans for a house they designed themselves</li>
+      <li>A fun, exploratory first taste of what architecture school is actually like</li>
+    </ul>
+  </section>
+
+  <!-- SUPPLIES -->
+  <section class="sheet">
+    <p class="sheet-kicker">What to have on hand</p>
+    <h2 class="sheet-title">Simple tools. No software required.</h2>
+    <span class="supply-note">Everything below is available at any art or drafting store, or on Amazon — the full set typically runs under $25.</span>
+    <ul class="supply-list">
+      <li><b>Architectural scale</b> <span>for scaled drawings</span></li>
+      <li><b>11×17 graph paper</b> <span>the drawing surface</span></li>
+      <li><b>Mechanical pencil</b> <span>keeps lines crisp</span></li>
+      <li><b>White high-polymer eraser</b> <span>won't tear the paper</span></li>
+      <li><b>1/4"=1'-0" floor plan template</b> <span>furniture, fixtures, doors</span></li>
+      <li><b>Eraser shield</b> <span>optional, but genuinely fun</span></li>
+    </ul>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="sheet">
+    <p class="sheet-kicker">What families are saying</p>
+    <h2 class="sheet-title">4.75 stars across 800+ learners</h2>
+    <div class="review-grid">
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>"My son absolutely loved this class! Even corrections are given in such a gentle and caring way. Her classes have such a positive atmosphere, perfect for building up the confidence of her students."</p>
+        <span>Parent review — April 2022</span>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>"My daughter really enjoyed this class and how Monica taught it. I also liked that Monica required the kids to present and give feedback to each other! So great!"</p>
+        <span>Parent review — March 2022</span>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>"The class lectures were clear. The assignments were very helpful with an organized way of learning... I have taken these classes in college and wish it was explained this well!"</p>
+        <span>Parent review — October 2021</span>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>"I loved this class! This class was especially helpful to me, since I am a senior considering Architecture School. Now I know that is something I would like!"</p>
+        <span>Student review — January 2021</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="sheet final-cta">
+    <h2 class="serif">Ready for your student to draw their dream home?</h2>
+    <p>Email me directly with any questions about scheduling, age fit, or supplies — I read and respond to every message myself.</p>
+    <a class="btn btn-primary" href="mailto:monicacv@gmail.com?subject=Getting%20Started%20in%20Architecture%20-%20Enrollment%20Question">Email Monica: monicacv@gmail.com</a>
+  </section>
+
+</div>
+
+<footer>
+  Monica Vandeventer, B.Arch — Getting Started in Architecture · Also listed on <a href="https://outschool.com/classes/getting-started-in-architecture-draw-your-dream-home-snx9pSzK" target="_blank" rel="noopener">Outschool</a>
+</footer>
+
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-cap" id="lightboxCap"></div>
+</div>
+
+<script>
+  (function(){
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightboxImg');
+    var lightboxCap = document.getElementById('lightboxCap');
+    var closeBtn = document.getElementById('lightboxClose');
+
+    document.querySelectorAll('.gallery-item').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        lightboxImg.src = btn.getAttribute('data-full');
+        lightboxImg.alt = btn.getAttribute('data-cap');
+        lightboxCap.textContent = btn.getAttribute('data-cap');
+        lightbox.classList.add('open');
+      });
+    });
+
+    function close(){ lightbox.classList.remove('open'); lightboxImg.src=''; }
+    closeBtn.addEventListener('click', close);
+    lightbox.addEventListener('click', function(e){ if(e.target === lightbox) close(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+  })();
+</script>
+
+</body>
+</html>
